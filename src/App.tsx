@@ -1,25 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter, Routes,Route} from "react-router-dom";
+import Home from "./pages/Home";
+import WithNavBar from "./pages/layouts/WithNavBar/WithNavBar";
+import Product from "./pages/Product";
+import Cart from "./pages/Cart";
+import ShoppingList from "./pages/ShoppingList";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <BrowserRouter>
+          <Routes>
+              {/*pages with nav bar*/}
+              <Route element={<WithNavBar/>}>
+
+
+                  <Route path={"*"} element={<h1>notFound</h1>}/>
+
+                  <Route path={"/"} element={<Home/>}/>
+
+                  <Route path={"/product/:productId"} element={<Product/>}/>
+
+                  <Route path={"/cart"} element={<Cart/>}/>
+
+                  <Route path={"/shopping-list"} element={<ShoppingList/>}/>
+              </Route>
+
+          </Routes>
+      </BrowserRouter>
   );
 }
 
