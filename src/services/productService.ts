@@ -7,6 +7,9 @@ import {IRange} from "../types/IRange";
 import {ICategory} from "../types/ICategory";
 import {IProductImage} from "../types/IProductImage";
 import {IProductVariations} from "../types/IProductVariations";
+import {IProductVariationProperties} from "../types/IProductVariationProperties";
+import {IProductVariationPropertyListValues} from "../types/IProductVariationPropertyListValues";
+import {IProductVariationPropertyValues} from "../types/IProductVariationPropertyValues";
 
 
 
@@ -105,6 +108,76 @@ export default class productService {
         } = props
 
         const resp = await api.get<IProductVariations[]>('/ProductVariations', {
+            params: {
+                ...(range&&{
+                    range: JSON.stringify(range)
+                }),
+                ...(sort&&{
+                    sort: JSON.stringify(sort)
+                }),
+                ...(filter&&{
+                    filter: JSON.stringify(filter)
+                }),
+            }
+        })
+
+        return resp.data
+    }
+    static async getProductVariationProperties(props: DefaultApiProps<IProductVariationProperties>):Promise<IProductVariationProperties[]>{
+        const {
+            range,
+            sort,
+            filter
+        } = props
+
+        const resp = await api.get<IProductVariationProperties[]>('/ProductVariationProperties', {
+            params: {
+                ...(range&&{
+                    range: JSON.stringify(range)
+                }),
+                ...(sort&&{
+                    sort: JSON.stringify(sort)
+                }),
+                ...(filter&&{
+                    filter: JSON.stringify(filter)
+                }),
+            }
+        })
+
+        return resp.data
+    }
+    static async getProductVariationPropertyListValues(props: DefaultApiProps<IProductVariationPropertyListValues>):Promise<IProductVariationPropertyListValues[]>{
+        const {
+            range,
+            sort,
+            filter
+        } = props
+
+        const resp = await api.get<IProductVariationPropertyListValues[]>('/ProductVariationPropertyListValues', {
+            params: {
+                ...(range&&{
+                    range: JSON.stringify(range)
+                }),
+                ...(sort&&{
+                    sort: JSON.stringify(sort)
+                }),
+                ...(filter&&{
+                    filter: JSON.stringify(filter)
+                }),
+            }
+        })
+
+        return resp.data
+    }
+    static async getProductVariationPropertyValues(props: DefaultApiProps<IProductVariationPropertyValues>):Promise<IProductVariationPropertyValues[]>{
+
+        const {
+            range,
+            sort,
+            filter
+        } = props
+
+        const resp = await api.get<IProductVariationPropertyValues[]>('/ProductVariationPropertyValues', {
             params: {
                 ...(range&&{
                     range: JSON.stringify(range)
