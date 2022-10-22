@@ -4,11 +4,12 @@ import {ISort} from "../types/ISort";
 import {IFilter} from "../types/IFilter";
 import {DefaultApiProps} from "../types/DefaultApiProps";
 import {IRange} from "../types/IRange";
+import {ICategory} from "../types/ICategory";
+import {IProductImage} from "../types/IProductImage";
+import {IProductVariations} from "../types/IProductVariations";
 
 
-type getProductsListProps = {
-    range: IRange
-} & DefaultApiProps<IProduct>
+
 
 
 
@@ -23,7 +24,7 @@ export default class productService {
 
     }
 
-    static async getProductsList(props:getProductsListProps): Promise<IProduct[]> {
+    static async getProductsList(props:DefaultApiProps<IProduct>): Promise<IProduct[]> {
 
         const {
             range,
@@ -33,7 +34,9 @@ export default class productService {
 
         const resp = await api.get<IProduct[]>(`/Products`, {
             params: {
-                range: JSON.stringify(range),
+                ...(range&&{
+                    range: JSON.stringify(range)
+                }),
                 ...(sort&&{
                     sort: JSON.stringify(sort)
                 }),
@@ -41,6 +44,77 @@ export default class productService {
                     filter: JSON.stringify(filter)
                 }),
 
+            }
+        })
+
+        return resp.data
+    }
+    static async getProductCategories(props:DefaultApiProps<ICategory>):Promise<ICategory[]>{
+        const {
+            range,
+            sort,
+            filter
+        } = props
+
+        const resp = await api.get<ICategory[]>('/Categories', {
+            params: {
+                ...(range&&{
+                    range: JSON.stringify(range)
+                }),
+                ...(sort&&{
+                    sort: JSON.stringify(sort)
+                }),
+                ...(filter&&{
+                    filter: JSON.stringify(filter)
+                }),
+            }
+        })
+
+        return resp.data
+
+    }
+    static async getProductImages(props:DefaultApiProps<IProductImage>):Promise<IProductImage[]>{
+        const {
+            range,
+            sort,
+            filter
+        } = props
+
+        const resp = await api.get<IProductImage[]>('/ProductImages', {
+            params: {
+                ...(range&&{
+                    range: JSON.stringify(range)
+                }),
+                ...(sort&&{
+                    sort: JSON.stringify(sort)
+                }),
+                ...(filter&&{
+                    filter: JSON.stringify(filter)
+                }),
+            }
+        })
+
+        return resp.data
+
+    }
+    static async getProductVariations(props: DefaultApiProps<IProductVariations>):Promise<IProductVariations[]>{
+        const {
+            range,
+            sort,
+            filter
+        } = props
+
+        const resp = await api.get<IProductVariations[]>('/ProductVariations', {
+            params: {
+                ...(range&&{
+                    range: JSON.stringify(range)
+                }),
+                ...(sort&&{
+                    sort: JSON.stringify(sort)
+                }),
+                ...(filter&&{
+                    filter: JSON.stringify(filter)
+                }),
             }
         })
 
