@@ -3,7 +3,7 @@ import {Cart} from "./models/cart";
 import {configureStore} from "@reduxjs/toolkit";
 
 
-const orm = new ORM()
+const orm = new ORM({ stateSelector: (state) => state.orm })
 
 orm.register(Cart)
 

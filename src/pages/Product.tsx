@@ -5,10 +5,11 @@ import {IProductVariations} from "../types/IProductVariations";
 import {IProductVariationProperties} from "../types/IProductVariationProperties";
 import {IProductVariationPropertyValues} from "../types/IProductVariationPropertyValues";
 import {IProductVariationPropertyListValues} from "../types/IProductVariationPropertyListValues";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {cartSelector} from "../store/selectors/selectors";
-import {createPost} from "../store/models/cart";
+import {addToCart, deleteFromCart} from "../store/models/cart";
+import {store} from "../store";
 
 type ProductProps = {
     productVariationProperties?: IProductVariationProperties[]
@@ -90,7 +91,7 @@ const Product: FC<ProductProps> = (props: ProductProps) => {
         getProductVariations()
     }, [productId])
 
-    const cart = useAppSelector(cartSelector)
+    const cart = useAppSelector(state => cartSelector(state))
 
     const dispatch = useAppDispatch()
 
@@ -103,10 +104,19 @@ const Product: FC<ProductProps> = (props: ProductProps) => {
             <button
                 onClick={() => {
                     setVariationId(prevState => prevState + 1)
-                    dispatch(createPost())
+                    dispatch(addToCart(1))
+
+
                 }}
 
             >change variation id
+            </button>
+            <button
+                onClick={()=>{
+                    console.log(cart)
+                }}
+            >
+                log state
             </button>
             {
                 (() => {

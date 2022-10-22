@@ -1,8 +1,8 @@
 import React, {FC, memo, useEffect, useState} from 'react';
 import {IProduct} from "../../../types/IProduct";
 import productService from "../../../services/productService";
-import {useNavigate} from "react-router-dom";
-
+import {Link, useNavigate} from "react-router-dom";
+import classes from './ProductCart.module.css'
 type ProductCardProps = {
     categories: Record<number, string>
 } & IProduct
@@ -50,29 +50,44 @@ const ProductCard: FC<ProductCardProps> = (props: ProductCardProps) => {
 
     }, [])
 
-    const navigator = useNavigate()
+
 
     return (
-        <div onClick={() => {
-            navigator(`/product/${id}`)
-        }}>
-            <h1>
-                {id}
-            </h1>
-            <h1>
-                {name}
-            </h1>
-            <h1>
-                {`от: ${price}`}
-            </h1>
-            <h3>
+        <Link
+            to={`/product/${id}`}
+            className={classes.container}
+        >
+            <img
+                className={classes.image}
+                src={`https://test2.sionic.ru${imageUrl}`}
+            />
+            <button
+                className={classes.category}
+            >
                 {categories[category_id]}
-            </h3>
-            <img src={`https://test2.sionic.ru${imageUrl}`}/>
-            <h5>
-                {description}
-            </h5>
-        </div>
+            </button>
+
+            <h4
+                className={classes.name}
+            >
+                {name}
+            </h4>
+            <h2
+                className={classes.price}
+            >
+                {`от: ${price?price:""}`}
+            </h2>
+
+            <button
+                className={classes.cart_btn}
+                onClick={(e)=>{
+                    e.preventDefault()
+
+                }}
+            >
+                Add to cart
+            </button>
+        </Link>
     );
 };
 

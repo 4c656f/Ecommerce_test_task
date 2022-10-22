@@ -1,5 +1,7 @@
 import React, {FC} from 'react';
 import {Outlet} from 'react-router-dom';
+import classes from "./WithNavBar.module.css"
+import NavBar from "../../../components/ui/NavBar/NavBar";
 
 type WithNavBarProps = {}
 
@@ -9,12 +11,15 @@ const WithNavBar: FC<WithNavBarProps> = (props: WithNavBarProps) => {
 
 
     return (
-        <div>
+        <div className={classes.container}>
             {/*navbar*/}
-            navbar
+            <NavBar/>
 
-
-            <Outlet/>
+            <div
+                className={classes.content_container}
+            >
+                <Outlet/>
+            </div>
 
         </div>
     );

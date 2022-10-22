@@ -1,9 +1,9 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
-import productService from "../services/productService";
-import {IProduct} from "../types/IProduct";
-import {IRange} from "../types/IRange";
-import ProductCard from "../components/ui/ProductCard/ProductCard";
-
+import productService from "../../services/productService";
+import {IProduct} from "../../types/IProduct";
+import {IRange} from "../../types/IRange";
+import ProductCard from "../../components/ui/ProductCard/ProductCard";
+import classes from './Home.module.css'
 type HomeProps = {}
 
 
@@ -88,31 +88,37 @@ const Home: FC<HomeProps> = (props: HomeProps) => {
     }, [isLoading, isLast]);
 
     return (
-        <div>
-
-            <div>
+        <div className={classes.container}>
+            <h2>Категории</h2>
+            <div className={classes.category_section}>
                 {
                     Object.entries(categories).map(value => {
 
                         return (
-                            <div key={value[0]}>{value[1]}</div>
+                            <button
+                                key={value[0]}
+                                className={classes.category_btn}
+                            >
+                                <h4>{value[1]}</h4>
+                            </button>
                         )
                     })
                 }
             </div>
+            <div className={classes.product_container}>
+                {
+                    products?.map(value => {
+                        return (
+                            <ProductCard
+                                key={value.id}
+                                categories={categories}
+                                {...value}
 
-            {
-                products?.map(value => {
-                    return (
-                        <ProductCard
-                            key={value.id}
-                            categories={categories}
-                            {...value}
-
-                        />
-                    )
-                })
-            }
+                            />
+                        )
+                    })
+                }
+            </div>
             <div ref={lastElem} style={{backgroundColor: "red", height: '50px', width: '50px'}}></div>
         </div>
     );

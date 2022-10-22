@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import WithNavBar from "./pages/layouts/WithNavBar/WithNavBar";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
@@ -8,6 +8,10 @@ import ShoppingList from "./pages/ShoppingList";
 import productService from "./services/productService";
 import {IProductVariationProperties} from "./types/IProductVariationProperties";
 import {IProductVariationPropertyListValues} from "./types/IProductVariationPropertyListValues";
+import './materials/styles/index.css'
+import './materials/styles/variables.css'
+
+
 
 
 function App() {
