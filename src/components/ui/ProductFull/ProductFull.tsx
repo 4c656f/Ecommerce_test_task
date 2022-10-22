@@ -4,7 +4,7 @@ type ProductFullProps = {
     productId: number
 }
 
-const ProductFull:FC<ProductFullProps> = (props:ProductFullProps) => {
+const ProductFull: FC<ProductFullProps> = (props: ProductFullProps) => {
 
     const {
         productId

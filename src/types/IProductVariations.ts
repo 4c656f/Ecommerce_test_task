@@ -1,4 +1,4 @@
-export type IProductVariations ={
+export type IProductVariations = {
     id: number
     product_id: number
     price: number

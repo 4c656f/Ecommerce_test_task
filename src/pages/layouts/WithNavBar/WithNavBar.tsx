@@ -1,23 +1,17 @@
 import React, {FC} from 'react';
-import { Outlet } from 'react-router-dom';
-import classes from "./WithNavBar.module.css"
+import {Outlet} from 'react-router-dom';
 
-type WithNavBarProps = {
+type WithNavBarProps = {}
 
-}
+const WithNavBar: FC<WithNavBarProps> = (props: WithNavBarProps) => {
 
-const WithNavBar:FC<WithNavBarProps> = (props:WithNavBarProps) => {
-
-    const {
-
-    } = props
+    const {} = props
 
 
     return (
         <div>
             {/*navbar*/}
             navbar
-
 
 
             <Outlet/>

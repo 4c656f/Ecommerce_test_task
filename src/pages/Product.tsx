@@ -5,6 +5,10 @@ import {IProductVariations} from "../types/IProductVariations";
 import {IProductVariationProperties} from "../types/IProductVariationProperties";
 import {IProductVariationPropertyValues} from "../types/IProductVariationPropertyValues";
 import {IProductVariationPropertyListValues} from "../types/IProductVariationPropertyListValues";
+import {useSelector} from "react-redux";
+import {useAppDispatch, useAppSelector} from "../store/hooks";
+import {cartSelector} from "../store/selectors/selectors";
+import {createPost} from "../store/models/cart";
 
 type ProductProps = {
     productVariationProperties?: IProductVariationProperties[]
@@ -66,18 +70,17 @@ const Product: FC<ProductProps> = (props: ProductProps) => {
                     },
                 sort: ["id", 'ASC']
             })
-     
+
         values.forEach((value) => {
 
-            setVariationProperties(prevState =>{
-                prevState.set(`${value.product_variation_property_id}${value.product_variation_id}`, value)
-                return prevState
-            }
+            setVariationProperties(prevState => {
+                    prevState.set(`${value.product_variation_property_id}${value.product_variation_id}`, value)
+                    return prevState
+                }
             )
 
         })
         setIsRenderProperties(true)
-
 
 
     }
@@ -87,19 +90,29 @@ const Product: FC<ProductProps> = (props: ProductProps) => {
         getProductVariations()
     }, [productId])
 
+    const cart = useAppSelector(cartSelector)
 
+    const dispatch = useAppDispatch()
+
+    useEffect(()=>{
+        console.log(cart)
+    },[])
 
     return (
         <div>
             <button
-                onClick={()=>setVariationId(prevState => prevState+1)}
+                onClick={() => {
+                    setVariationId(prevState => prevState + 1)
+                    dispatch(createPost())
+                }}
 
-            >change variation id</button>
+            >change variation id
+            </button>
             {
-                (()=>{
-                    if(isRenderProperties && propertiesObj){
-                        return productVariationProperties?.map((data) => {
+                (() => {
+                    if (isRenderProperties && propertiesObj) {
 
+                        return productVariationProperties?.map((data) => {
 
 
                             let dataString = calculateProperty(
@@ -109,7 +122,6 @@ const Product: FC<ProductProps> = (props: ProductProps) => {
                                 propertiesObj,
                                 variationProperties
                             )
-
 
 
                             return (
@@ -122,7 +134,7 @@ const Product: FC<ProductProps> = (props: ProductProps) => {
                                     </div>
                                     <div>
                                         {
-                                            dataString?dataString:"null"
+                                            dataString ? dataString : "null"
                                         }
                                     </div>
                                 </div>

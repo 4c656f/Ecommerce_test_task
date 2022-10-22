@@ -1,19 +1,15 @@
 import React, {FC} from 'react';
 
-type CartProps = {
+type CartProps = {}
 
-}
+const Cart: FC<CartProps> = (props: CartProps) => {
 
-const Cart:FC<CartProps> = (props:CartProps) => {
+    const {} = props
 
-    const {
-        
-    } = props
 
-    
     return (
         <div>
-            
+
         </div>
     );
 };

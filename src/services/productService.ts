@@ -1,20 +1,12 @@
 import {IProduct} from "../types/IProduct";
 import api from "./HTTPConfig/HTTPConfig";
-import {ISort} from "../types/ISort";
-import {IFilter} from "../types/IFilter";
 import {DefaultApiProps} from "../types/DefaultApiProps";
-import {IRange} from "../types/IRange";
 import {ICategory} from "../types/ICategory";
 import {IProductImage} from "../types/IProductImage";
 import {IProductVariations} from "../types/IProductVariations";
 import {IProductVariationProperties} from "../types/IProductVariationProperties";
 import {IProductVariationPropertyListValues} from "../types/IProductVariationPropertyListValues";
 import {IProductVariationPropertyValues} from "../types/IProductVariationPropertyValues";
-
-
-
-
-
 
 
 export default class productService {
@@ -27,7 +19,7 @@ export default class productService {
 
     }
 
-    static async getProductsList(props:DefaultApiProps<IProduct>): Promise<IProduct[]> {
+    static async getProductsList(props: DefaultApiProps<IProduct>): Promise<IProduct[]> {
 
         const {
             range,
@@ -37,13 +29,13 @@ export default class productService {
 
         const resp = await api.get<IProduct[]>(`/Products`, {
             params: {
-                ...(range&&{
+                ...(range && {
                     range: JSON.stringify(range)
                 }),
-                ...(sort&&{
+                ...(sort && {
                     sort: JSON.stringify(sort)
                 }),
-                ...(filter&&{
+                ...(filter && {
                     filter: JSON.stringify(filter)
                 }),
 
@@ -52,7 +44,8 @@ export default class productService {
 
         return resp.data
     }
-    static async getProductCategories(props:DefaultApiProps<ICategory>):Promise<ICategory[]>{
+
+    static async getProductCategories(props: DefaultApiProps<ICategory>): Promise<ICategory[]> {
         const {
             range,
             sort,
@@ -61,13 +54,13 @@ export default class productService {
 
         const resp = await api.get<ICategory[]>('/Categories', {
             params: {
-                ...(range&&{
+                ...(range && {
                     range: JSON.stringify(range)
                 }),
-                ...(sort&&{
+                ...(sort && {
                     sort: JSON.stringify(sort)
                 }),
-                ...(filter&&{
+                ...(filter && {
                     filter: JSON.stringify(filter)
                 }),
             }
@@ -76,7 +69,8 @@ export default class productService {
         return resp.data
 
     }
-    static async getProductImages(props:DefaultApiProps<IProductImage>):Promise<IProductImage[]>{
+
+    static async getProductImages(props: DefaultApiProps<IProductImage>): Promise<IProductImage[]> {
         const {
             range,
             sort,
@@ -85,13 +79,13 @@ export default class productService {
 
         const resp = await api.get<IProductImage[]>('/ProductImages', {
             params: {
-                ...(range&&{
+                ...(range && {
                     range: JSON.stringify(range)
                 }),
-                ...(sort&&{
+                ...(sort && {
                     sort: JSON.stringify(sort)
                 }),
-                ...(filter&&{
+                ...(filter && {
                     filter: JSON.stringify(filter)
                 }),
             }
@@ -100,7 +94,8 @@ export default class productService {
         return resp.data
 
     }
-    static async getProductVariations(props: DefaultApiProps<IProductVariations>):Promise<IProductVariations[]>{
+
+    static async getProductVariations(props: DefaultApiProps<IProductVariations>): Promise<IProductVariations[]> {
         const {
             range,
             sort,
@@ -109,13 +104,13 @@ export default class productService {
 
         const resp = await api.get<IProductVariations[]>('/ProductVariations', {
             params: {
-                ...(range&&{
+                ...(range && {
                     range: JSON.stringify(range)
                 }),
-                ...(sort&&{
+                ...(sort && {
                     sort: JSON.stringify(sort)
                 }),
-                ...(filter&&{
+                ...(filter && {
                     filter: JSON.stringify(filter)
                 }),
             }
@@ -123,7 +118,8 @@ export default class productService {
 
         return resp.data
     }
-    static async getProductVariationProperties(props: DefaultApiProps<IProductVariationProperties>):Promise<IProductVariationProperties[]>{
+
+    static async getProductVariationProperties(props: DefaultApiProps<IProductVariationProperties>): Promise<IProductVariationProperties[]> {
         const {
             range,
             sort,
@@ -132,13 +128,13 @@ export default class productService {
 
         const resp = await api.get<IProductVariationProperties[]>('/ProductVariationProperties', {
             params: {
-                ...(range&&{
+                ...(range && {
                     range: JSON.stringify(range)
                 }),
-                ...(sort&&{
+                ...(sort && {
                     sort: JSON.stringify(sort)
                 }),
-                ...(filter&&{
+                ...(filter && {
                     filter: JSON.stringify(filter)
                 }),
             }
@@ -146,7 +142,8 @@ export default class productService {
 
         return resp.data
     }
-    static async getProductVariationPropertyListValues(props: DefaultApiProps<IProductVariationPropertyListValues>):Promise<IProductVariationPropertyListValues[]>{
+
+    static async getProductVariationPropertyListValues(props: DefaultApiProps<IProductVariationPropertyListValues>): Promise<IProductVariationPropertyListValues[]> {
         const {
             range,
             sort,
@@ -155,13 +152,13 @@ export default class productService {
 
         const resp = await api.get<IProductVariationPropertyListValues[]>('/ProductVariationPropertyListValues', {
             params: {
-                ...(range&&{
+                ...(range && {
                     range: JSON.stringify(range)
                 }),
-                ...(sort&&{
+                ...(sort && {
                     sort: JSON.stringify(sort)
                 }),
-                ...(filter&&{
+                ...(filter && {
                     filter: JSON.stringify(filter)
                 }),
             }
@@ -169,7 +166,8 @@ export default class productService {
 
         return resp.data
     }
-    static async getProductVariationPropertyValues(props: DefaultApiProps<IProductVariationPropertyValues>):Promise<IProductVariationPropertyValues[]>{
+
+    static async getProductVariationPropertyValues(props: DefaultApiProps<IProductVariationPropertyValues>): Promise<IProductVariationPropertyValues[]> {
 
         const {
             range,
@@ -179,13 +177,13 @@ export default class productService {
 
         const resp = await api.get<IProductVariationPropertyValues[]>('/ProductVariationPropertyValues', {
             params: {
-                ...(range&&{
+                ...(range && {
                     range: JSON.stringify(range)
                 }),
-                ...(sort&&{
+                ...(sort && {
                     sort: JSON.stringify(sort)
                 }),
-                ...(filter&&{
+                ...(filter && {
                     filter: JSON.stringify(filter)
                 }),
             }

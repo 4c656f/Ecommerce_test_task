@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {BrowserRouter, Routes,Route} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from "./pages/Home";
 import WithNavBar from "./pages/layouts/WithNavBar/WithNavBar";
 import Product from "./pages/Product";
@@ -13,49 +13,49 @@ import {IProductVariationPropertyListValues} from "./types/IProductVariationProp
 function App() {
 
     const [variationsProperties, setVariationsProperties] = useState<IProductVariationProperties[]>([])
-    const [productVariationPropertyListValues, setProductVariationPropertyListValues] = useState<Record<number,IProductVariationPropertyListValues>>({})
+    const [productVariationPropertyListValues, setProductVariationPropertyListValues] = useState<Record<number, IProductVariationPropertyListValues>>({})
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log('categoryrequest')
         productService.getProductVariationProperties({
-            sort:["id", 'ASC']
-        }).then((data)=>{
+            sort: ["id", 'ASC']
+        }).then((data) => {
             console.log(data, '-----properties')
             setVariationsProperties([...data])
         })
         productService.getProductVariationPropertyListValues({}).then(value => {
-            const obj = value.reduce((acum, val)=>{
+            const obj = value.reduce((acum, val) => {
                 acum[val["id"]] = val
                 return acum
-            },{} as Record<number, IProductVariationPropertyListValues>)
+            }, {} as Record<number, IProductVariationPropertyListValues>)
             setProductVariationPropertyListValues({...obj})
         })
-    },[])
+    }, [])
 
-  return (
-      <BrowserRouter>
-          <Routes>
-              {/*pages with nav bar*/}
-              <Route element={<WithNavBar/>}>
+    return (
+        <BrowserRouter>
+            <Routes>
+                {/*pages with nav bar*/}
+                <Route element={<WithNavBar/>}>
 
 
-                  <Route path={"*"} element={<h1>notFound</h1>}/>
+                    <Route path={"*"} element={<h1>notFound</h1>}/>
 
-                  <Route path={"/"} element={<Home/>}/>
+                    <Route path={"/"} element={<Home/>}/>
 
-                  <Route path={"/product/:productId"} element={<Product
-                      productVariationProperties={variationsProperties}
-                      propertiesObj={productVariationPropertyListValues}
-                  />}/>
+                    <Route path={"/product/:productId"} element={<Product
+                        productVariationProperties={variationsProperties}
+                        propertiesObj={productVariationPropertyListValues}
+                    />}/>
 
-                  <Route path={"/cart"} element={<Cart/>}/>
+                    <Route path={"/cart"} element={<Cart/>}/>
 
-                  <Route path={"/shopping-list"} element={<ShoppingList/>}/>
-              </Route>
+                    <Route path={"/shopping-list"} element={<ShoppingList/>}/>
+                </Route>
 
-          </Routes>
-      </BrowserRouter>
-  );
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;

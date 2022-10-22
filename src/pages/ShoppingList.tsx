@@ -1,19 +1,15 @@
 import React, {FC} from 'react';
 
-type ShoppingListProps = {
+type ShoppingListProps = {}
 
-}
+const ShoppingList: FC<ShoppingListProps> = (props: ShoppingListProps) => {
 
-const ShoppingList:FC<ShoppingListProps> = (props:ShoppingListProps) => {
+    const {} = props
 
-    const {
-        
-    } = props
 
-    
     return (
         <div>
-            
+
         </div>
     );
 };

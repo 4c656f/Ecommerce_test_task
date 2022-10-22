@@ -35,16 +35,16 @@ const ProductCard: FC<ProductCardProps> = (props: ProductCardProps) => {
                     {
                         product_id: id
                     }
-            }).then((data)=>{
-                console.log(id, data)
-                const price = data.reduce((acum, variation, index)=>{
-                    const price = variation.price
-                    if(price < acum || index===0){
-                        acum = price
-                    }
-                    return acum
-                },0)
-                setPrice(price)
+            }).then((data) => {
+            console.log(id, data)
+            const price = data.reduce((acum, variation, index) => {
+                const price = variation.price
+                if (price < acum || index === 0) {
+                    acum = price
+                }
+                return acum
+            }, 0)
+            setPrice(price)
         })
 
 
@@ -53,7 +53,9 @@ const ProductCard: FC<ProductCardProps> = (props: ProductCardProps) => {
     const navigator = useNavigate()
 
     return (
-        <div onClick={()=>{navigator(`/product/${id}`)}}>
+        <div onClick={() => {
+            navigator(`/product/${id}`)
+        }}>
             <h1>
                 {id}
             </h1>
