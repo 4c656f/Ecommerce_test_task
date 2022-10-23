@@ -4,6 +4,7 @@ import productService from "../../../services/productService";
 import {Link, useNavigate} from "react-router-dom";
 import classes from './ProductCart.module.css'
 import Button from "../Button/Button";
+import CustomImage from "../CustomImage/Image";
 type ProductCardProps = {
     categories: Record<number, string>
 } & IProduct
@@ -25,14 +26,12 @@ const ProductCard: FC<ProductCardProps> = (props: ProductCardProps) => {
 
     useEffect(() => {
 
-        const img = new Image()
+
 
         productService.getProductImages({
             filter: {product_id: id}
         }).then((data) => {
-
-            img.src = `https://test2.sionic.ru${data[0].image_url}`
-            img.onload=()=>setImageUrl(data[0].image_url)
+            setImageUrl(data[0].image_url)
         })
         productService.getProductVariations(
             {
@@ -53,14 +52,11 @@ const ProductCard: FC<ProductCardProps> = (props: ProductCardProps) => {
             to={`/product/${id}`}
             className={classes.container}
         >
-            {imageUrl?
-                <img
-                    className={classes.image}
-                    src={`https://test2.sionic.ru${imageUrl}`}
-                />:<div className={`loader_bg ${classes.image_loader}`}>
+            <CustomImage
+                className={classes.image}
+                src={imageUrl}
+            />
 
-                </div>
-            }
 
             <button
                 className={classes.category}

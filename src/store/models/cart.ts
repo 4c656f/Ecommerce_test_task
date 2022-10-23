@@ -3,20 +3,36 @@ import {createAction} from "@reduxjs/toolkit";
 
 
 export type CartFields = {
-    id: number;
+    id: string;
     productId: number;
     variationId: number;
     productImg: string;
     quantity: number
 }
 
-export const addToCart = createAction<Omit<CartFields, 'quantity'>>("models/cart/create");
+type IAddToCart = {
+    productId: number;
+    variationId: number;
+    productImg: string;
+}
+type IChangeQuantity = {
+    productId: number|string;
+    variationId:number|string
+    amount: number
+}
+
+export const addToCart = createAction<IAddToCart>("models/cart/create");
+export const changeQuantity = createAction<IChangeQuantity>("models/cart/change");
 export const deleteFromCart = createAction<number>("models/cart/delete");
 
 
 interface addToCart {
     type: "models/cart/create"
-    payload: Omit<CartFields, 'quantity'>
+    payload: IAddToCart
+}
+interface changeQuantity {
+    type: "models/cart/change"
+    payload: IChangeQuantity
 }
 
 interface removeFromCart {
@@ -26,7 +42,7 @@ interface removeFromCart {
     }
 }
 
-type IActions = addToCart | removeFromCart
+type IActions = addToCart | removeFromCart | changeQuantity
 
 export class Cart extends Model {
     static get fields() {
@@ -42,7 +58,7 @@ export class Cart extends Model {
     static reducer({type, payload}: IActions, Cart: any, session: any) {
         switch (type) {
             case "models/cart/create": {
-                let cartElem = Cart.withId(payload.id)
+                let cartElem = Cart.withId(`${payload.productId}${payload.variationId}`)
                 if (cartElem) {
                     cartElem?.update(
                         {
@@ -50,7 +66,8 @@ export class Cart extends Model {
                         }
                     )
                 } else {
-                    Cart.upsert({
+                    Cart.create({
+                        id: `${payload.productId}${payload.variationId}`,
                         quantity: 1,
                         ...payload
                     })
@@ -66,8 +83,28 @@ export class Cart extends Model {
                 post?.delete();
                 break;
             }
+            case 'models/cart/change': {
+                const{
+                    productId,
+                    variationId,
+                    amount
+                } = payload
+                let cartElem = Cart.withId(`${productId}${variationId}`)
+                if (cartElem) {
+                    cartElem?.update(
+                        {
+                            quantity: cartElem.quantity + amount
+                        }
+                    )
+                }
+
+
+
+                break;
+            }
             default:
                 break;
+
         }
     }
 }

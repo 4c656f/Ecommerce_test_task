@@ -11,6 +11,7 @@ import classes from './Product.module.css'
 import Button from "../../components/ui/Button/Button";
 import {DropDown, MenuItem} from "4c656f_react_ui_kit";
 import {addToCart} from "../../store/models/cart";
+import CustomImage from "../../components/ui/CustomImage/Image";
 
 type ProductProps = {
     productVariationProperties?: IProductVariationProperties[]
@@ -68,10 +69,8 @@ const Product: FC<ProductProps> = (props: ProductProps) => {
         const prodId = Number(productId)
         const product = await productService.getProductImages({filter: {product_id: prodId}})
 
-        const img = new Image()
+        setImageUrl(product[0].image_url)
 
-        img.src = `https://test2.sionic.ru${product[0].image_url}`
-        img.onload = () => setImageUrl(`https://test2.sionic.ru${product[0].image_url}`)
 
 
         const data = await productService.getProductVariations({filter: {product_id: prodId}})
@@ -127,7 +126,6 @@ const Product: FC<ProductProps> = (props: ProductProps) => {
         if(!variations?.get(variationId)?.stock)return
         if(!productId || !imageUrl)return;
         dispatch(addToCart({
-            id: Number(productId),
             productId: Number(productId),
             productImg: imageUrl,
             variationId: variationId,
@@ -138,18 +136,10 @@ const Product: FC<ProductProps> = (props: ProductProps) => {
         <div
             className={classes.container}
         >
-            {
-                imageUrl ?
-                    <img
-                        className={classes.image}
-                        src={imageUrl}
-                    /> :
-                    <div
-                        className={`loader_bg ${classes.image}`}
-                    >
-
-                    </div>
-            }
+            <CustomImage
+                className={classes.image}
+                src={imageUrl}
+            />
             <div
                 className={classes.price_properties_container}
             >
