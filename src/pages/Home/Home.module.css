@@ -4,6 +4,8 @@
     align-items: flex-start;
     justify-content: center;
     grid-gap: 22px;
+
+    width: 100%;
 }
 .category_section{
     display: flex;
@@ -13,6 +15,7 @@
     width: 100%;
     overflow: scroll;
     grid-gap: 10px;
+    position: relative;
 }
 .category_btn{
     all: unset;
@@ -33,4 +36,12 @@
     justify-content: center;
     grid-gap: 20px;
     flex-wrap: wrap;
+    width: 100%;
+    position: relative;
+}
+.observer{
+    position: absolute;
+    bottom: calc(0% - 100px);
+    width: 1px;
+    height: 1px;
 }

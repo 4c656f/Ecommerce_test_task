@@ -3,6 +3,7 @@ import {IProduct} from "../../../types/IProduct";
 import productService from "../../../services/productService";
 import {Link, useNavigate} from "react-router-dom";
 import classes from './ProductCart.module.css'
+import Button from "../Button/Button";
 type ProductCardProps = {
     categories: Record<number, string>
 } & IProduct
@@ -23,31 +24,26 @@ const ProductCard: FC<ProductCardProps> = (props: ProductCardProps) => {
     } = props
 
     useEffect(() => {
-        console.log("imagerequest")
+
+        const img = new Image()
+
         productService.getProductImages({
             filter: {product_id: id}
         }).then((data) => {
-            setImageUrl(data[0]["image_url"])
+
+            img.src = `https://test2.sionic.ru${data[0].image_url}`
+            img.onload=()=>setImageUrl(data[0].image_url)
         })
         productService.getProductVariations(
             {
                 filter:
                     {
                         product_id: id
-                    }
+                    },
+                sort: ["price", 'ASC']
             }).then((data) => {
-            console.log(id, data)
-            const price = data.reduce((acum, variation, index) => {
-                const price = variation.price
-                if (price < acum || index === 0) {
-                    acum = price
-                }
-                return acum
-            }, 0)
-            setPrice(price)
-        })
-
-
+                setPrice(data[0].price)
+            })
     }, [])
 
 
@@ -57,10 +53,15 @@ const ProductCard: FC<ProductCardProps> = (props: ProductCardProps) => {
             to={`/product/${id}`}
             className={classes.container}
         >
-            <img
-                className={classes.image}
-                src={`https://test2.sionic.ru${imageUrl}`}
-            />
+            {imageUrl?
+                <img
+                    className={classes.image}
+                    src={`https://test2.sionic.ru${imageUrl}`}
+                />:<div className={`loader_bg ${classes.image_loader}`}>
+
+                </div>
+            }
+
             <button
                 className={classes.category}
             >
@@ -78,7 +79,7 @@ const ProductCard: FC<ProductCardProps> = (props: ProductCardProps) => {
                 {`от: ${price?price:""}`}
             </h2>
 
-            <button
+            <Button
                 className={classes.cart_btn}
                 onClick={(e)=>{
                     e.preventDefault()
@@ -86,7 +87,7 @@ const ProductCard: FC<ProductCardProps> = (props: ProductCardProps) => {
                 }}
             >
                 Add to cart
-            </button>
+            </Button>
         </Link>
     );
 };

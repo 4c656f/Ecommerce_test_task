@@ -14,7 +14,7 @@ const Home: FC<HomeProps> = (props: HomeProps) => {
     const lastElem = useRef<any>();
     const observer = useRef<any>();
 
-    const [range, setRange] = useState<IRange>([0, 20])
+    const [range, setRange] = useState<IRange>([0, 10])
 
     const [isLast, setIsLast] = useState(false)
 
@@ -75,7 +75,9 @@ const Home: FC<HomeProps> = (props: HomeProps) => {
         if (observer.current) observer.current.disconnect();
 
         const observerCallback = (entries: any[]) => {
+
             if (entries[0].isIntersecting) {
+                console.log('observerd', range)
                 setRange((prevState) => {
                     return [prevState[1] + 1, prevState[1] + 10]
                 })
@@ -118,8 +120,9 @@ const Home: FC<HomeProps> = (props: HomeProps) => {
                         )
                     })
                 }
+                <div ref={lastElem} className={classes.observer}></div>
             </div>
-            <div ref={lastElem} style={{backgroundColor: "red", height: '50px', width: '50px'}}></div>
+
         </div>
     );
 };

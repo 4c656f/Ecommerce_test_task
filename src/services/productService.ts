@@ -11,7 +11,7 @@ import {IProductVariationPropertyValues} from "../types/IProductVariationPropert
 
 export default class productService {
 
-    static async getProduct(id: number): Promise<IProduct> {
+    static async getProduct(id: number|string): Promise<IProduct> {
 
         const resp = await api.get<IProduct>(`/Products/${id}`)
 

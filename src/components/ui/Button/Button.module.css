@@ -1,0 +1,18 @@
+.btn{
+    all: unset;
+    width: 100%;
+    cursor: pointer;
+    border: var(--accent_blue) 1px solid;
+    border-radius: 999px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Raleway;
+    font-size: 14px;
+    color: var(--accent_blue);
+    transition: var(--transition);
+}
+.btn:hover{
+    background-color: var(--secondary_blue);
+}

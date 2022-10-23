@@ -3,8 +3,11 @@
     box-sizing: border-box;
     margin: 0;
 }
-h1 h2 h3 h4 h5 h6{
+h1 h2 h3 h4 h5 h6 span{
     white-space: nowrap;
+}
+img{
+    object-fit: cover;
 }
 h1{
 
@@ -30,4 +33,29 @@ h4{
     font-family: 'Raleway';
     font-weight: 400;
     font-size: 14px;
+}
+span{
+    all: unset;
+    font-family: 'Raleway';
+    font-weight: 400;
+    font-size: 14px;
+}
+@keyframes backgroundShimmer{
+    0%{
+        background-color: var(--secondary_white);
+    }
+    50%{
+        background-color: var(--secondary_blue);
+    }
+    100%{
+        background-color: var(--secondary_white);
+    }
+}
+.loader_bg{
+    background: var(--secondary_blue);
+    animation-name: backgroundShimmer;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+    animation-timing-function:ease-in;
+    animation-iteration-count: infinite;
 }

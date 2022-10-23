@@ -1,7 +1,21 @@
 .container{
     background-color: var(--background);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 20px;
+    grid-gap: 20px;
+    height: 0px;
+    min-height: 100vh;
 }
 .content_container{
     padding-right: 50px;
     padding-left: 50px;
+    height: 100%;
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }

@@ -1,9 +1,11 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import classes from './NavBar.module.css'
 import {ReactComponent as GeoIcon} from '../../../materials/icons/geoTag.svg'
 import {ReactComponent as SearchIcon} from '../../../materials/icons/search.svg'
 import {ReactComponent as CartIcon} from '../../../materials/icons/cart.svg'
 import {Link} from "react-router-dom";
+import {useAppSelector} from "../../../store/hooks";
+import {cartSelector} from "../../../store/selectors/selectors";
 type NavBarProps = {
 
 }
@@ -14,7 +16,13 @@ const NavBar:FC<NavBarProps> = (props:NavBarProps) => {
         
     } = props
 
-    
+
+    const cart = useAppSelector(state => cartSelector(state))
+
+    useEffect(()=>{
+        console.log(cart)
+    }, [cart.length])
+
     return (
         <div className={classes.container}>
             <Link className={classes.logo} to={'/'}>React</Link>
@@ -39,7 +47,9 @@ const NavBar:FC<NavBarProps> = (props:NavBarProps) => {
                 <CartIcon
                 />
                 <h3 className={classes.cart_counter}>
-                    10
+                    {
+                        cart.length>0&&cart.length
+                    }
                 </h3>
             </Link>
             <Link className={classes.avatar} to={'/shopping-list'}>
