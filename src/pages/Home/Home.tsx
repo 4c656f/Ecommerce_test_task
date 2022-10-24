@@ -4,6 +4,7 @@ import {IProduct} from "../../types/IProduct";
 import {IRange} from "../../types/IRange";
 import ProductCard from "../../components/ui/ProductCard/ProductCard";
 import classes from './Home.module.css'
+
 type HomeProps = {}
 
 
@@ -24,12 +25,10 @@ const Home: FC<HomeProps> = (props: HomeProps) => {
 
     const [categories, setCategories] = useState<Record<number, string>>({})
 
+    const [activeCategoryId, setActiveCategoryId] = useState<string | number>()
 
     useEffect(() => {
-
         setIsLoading(true)
-
-
         if (Object.keys(categories).length < 1) {
 
             productService.getProductCategories({}).then((data) => {
@@ -44,17 +43,27 @@ const Home: FC<HomeProps> = (props: HomeProps) => {
 
             })
         }
-
-
         productService.getProductsList({
             range: range,
-            sort: ['id', 'ASC']
+            sort: ['id', 'ASC'],
+            ...(activeCategoryId && {
+                filter: {
+                    category_id: Number(activeCategoryId)
+                }
+            })
         }).then((data) => {
             if (data.length <= 0) {
                 setIsLast(true)
                 return
             }
-            setProducts(prevState => [...prevState, ...data])
+
+            setProducts(prevState => {
+                if(range[0]===0){
+                    return [...data]
+                }
+                return [...prevState, ...data]
+            })
+            setIsLast(false)
 
         }).finally(() => {
             setIsLoading(false)
@@ -64,9 +73,38 @@ const Home: FC<HomeProps> = (props: HomeProps) => {
     }, [range[1]])
 
 
-    useEffect(() => {
+    const handleCategoryClick = (id: number | string) => {
+        setActiveCategoryId(id)
+        if (range[0] === 0) {
+            setIsLoading(true)
+            productService.getProductsList({
+                range: [0, 10],
+                sort: ['id', 'ASC'],
+                filter: {
+                    category_id: Number(id)
+                }
 
-        if (isLoading) return;
+            }).then((data) => {
+                if (data.length <= 0) {
+                    setIsLast(true)
+                    return
+                }
+
+                setProducts([...data])
+                setIsLast(false)
+
+            }).finally(() => setIsLoading(false))
+            return
+        }
+
+        setIsLoading(true)
+        setRange([0, 20])
+
+
+    }
+
+
+    useEffect(() => {
         if (isLast) {
             if (observer.current) observer.current.disconnect();
             return;
@@ -76,7 +114,7 @@ const Home: FC<HomeProps> = (props: HomeProps) => {
 
         const observerCallback = (entries: any[]) => {
 
-            if (entries[0].isIntersecting) {
+            if (entries[0].isIntersecting && !isLoading) {
                 console.log('observerd', range)
                 setRange((prevState) => {
                     return [prevState[1] + 1, prevState[1] + 10]
@@ -95,11 +133,12 @@ const Home: FC<HomeProps> = (props: HomeProps) => {
             <div className={classes.category_section}>
                 {
                     Object.entries(categories).map(value => {
-
                         return (
                             <button
                                 key={value[0]}
                                 className={classes.category_btn}
+                                onClick={() => handleCategoryClick(value[0])}
+                                style={{backgroundColor: activeCategoryId == value[0] ? 'red' : 'blue'}}
                             >
                                 <h4>{value[1]}</h4>
                             </button>
@@ -119,7 +158,9 @@ const Home: FC<HomeProps> = (props: HomeProps) => {
                             />
                         )
                     })
+
                 }
+                {isLast&&<h3>На этом всё</h3>}
                 <div ref={lastElem} className={classes.observer}></div>
             </div>
 

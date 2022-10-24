@@ -1,10 +1,11 @@
 import React, {FC, memo, useEffect, useState} from 'react';
 import {IProduct} from "../../../types/IProduct";
 import productService from "../../../services/productService";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import classes from './ProductCart.module.css'
 import Button from "../Button/Button";
 import CustomImage from "../CustomImage/Image";
+
 type ProductCardProps = {
     categories: Record<number, string>
 } & IProduct
@@ -16,6 +17,8 @@ const ProductCard: FC<ProductCardProps> = (props: ProductCardProps) => {
 
     const [price, setPrice] = useState<number>()
 
+    const [isPriceLoading, setIsPriceLoading] = useState<boolean>(true)
+
     const {
         categories,
         id,
@@ -25,7 +28,6 @@ const ProductCard: FC<ProductCardProps> = (props: ProductCardProps) => {
     } = props
 
     useEffect(() => {
-
 
 
         productService.getProductImages({
@@ -41,10 +43,9 @@ const ProductCard: FC<ProductCardProps> = (props: ProductCardProps) => {
                     },
                 sort: ["price", 'ASC']
             }).then((data) => {
-                setPrice(data[0].price)
-            })
+            setPrice(data[0].price)
+        }).finally(() => setIsPriceLoading(false))
     }, [])
-
 
 
     return (
@@ -69,15 +70,22 @@ const ProductCard: FC<ProductCardProps> = (props: ProductCardProps) => {
             >
                 {name}
             </h4>
-            <h2
-                className={classes.price}
-            >
-                {`от: ${price?price:""}`}
-            </h2>
+
+            {isPriceLoading ?
+                <div
+                    className={`loader_bg ${classes.price_loader}`}
+                />
+                :
+                <h2
+                    className={classes.price}
+                >
+                    {`от: ${price ? price : ""}`}
+                </h2>
+            }
 
             <Button
                 className={classes.cart_btn}
-                onClick={(e)=>{
+                onClick={(e) => {
                     e.preventDefault()
 
                 }}

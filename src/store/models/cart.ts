@@ -23,8 +23,8 @@ type IChangeQuantity = {
 
 export const addToCart = createAction<IAddToCart>("models/cart/create");
 export const changeQuantity = createAction<IChangeQuantity>("models/cart/change");
-export const deleteFromCart = createAction<number>("models/cart/delete");
-
+export const deleteFromCart = createAction<Omit<IChangeQuantity, 'amount'>>("models/cart/delete");
+export const hydrateCart = createAction<CartFields[]>("models/cart/hydrate");
 
 interface addToCart {
     type: "models/cart/create"
@@ -37,12 +37,14 @@ interface changeQuantity {
 
 interface removeFromCart {
     type: "models/cart/delete"
-    payload: {
-        id: number
-    }
+    payload: Omit<IChangeQuantity, 'amount'>
+}
+interface hydrateCart {
+    type: "models/cart/hydrate"
+    payload: CartFields[]
 }
 
-type IActions = addToCart | removeFromCart | changeQuantity
+type IActions = addToCart | removeFromCart | changeQuantity | hydrateCart
 
 export class Cart extends Model {
     static get fields() {
@@ -77,10 +79,11 @@ export class Cart extends Model {
             case "models/cart/delete": {
 
                 const {
-                    id
+                    productId,
+                    variationId
                 } = payload
-                let post = Cart.withId(id);
-                post?.delete();
+                let cartElem = Cart.withId(`${productId}${variationId}`)
+                cartElem?.delete();
                 break;
             }
             case 'models/cart/change': {
@@ -90,6 +93,10 @@ export class Cart extends Model {
                     amount
                 } = payload
                 let cartElem = Cart.withId(`${productId}${variationId}`)
+                if(cartElem.quantity < 2 && amount < 0){
+                    cartElem?.delete()
+                    break
+                }
                 if (cartElem) {
                     cartElem?.update(
                         {
@@ -97,10 +104,17 @@ export class Cart extends Model {
                         }
                     )
                 }
-
-
-
                 break;
+            }
+            case 'models/cart/hydrate':{
+                const arr = payload
+
+                arr.forEach(value=>{
+                    Cart.create(value)
+                })
+                break;
+
+
             }
             default:
                 break;

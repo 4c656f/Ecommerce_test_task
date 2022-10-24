@@ -1,7 +1,7 @@
 .container{
     all:unset;
     cursor: pointer;
-    width: 214px;
+    width: 269px;
     height: 280px;
     display: flex;
     flex-direction: column;
@@ -12,7 +12,7 @@
 }
 .image{
     width: 100%;
-    height: 140px;
+    height: 150px;
     margin-right: 10px;
     margin-left: 10px;
     border-radius: 10px;
@@ -74,4 +74,9 @@
     font-family: Raleway;
     margin-top: -60px;
     margin-bottom: 30px;
+}
+.price_loader{
+    height: 27px;
+    width: 100%;
+    border-radius: 999px;
 }

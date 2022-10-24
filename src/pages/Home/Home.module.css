@@ -41,7 +41,7 @@
 }
 .observer{
     position: absolute;
-    bottom: calc(0% - 100px);
+    bottom: calc(0% + 200px);
     width: 1px;
     height: 1px;
 }

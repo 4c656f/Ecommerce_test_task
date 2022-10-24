@@ -10,6 +10,9 @@ import {IProductVariationProperties} from "./types/IProductVariationProperties";
 import {IProductVariationPropertyListValues} from "./types/IProductVariationPropertyListValues";
 import './materials/styles/index.css'
 import './materials/styles/variables.css'
+import CreateOrder from "./pages/CreateOrder/CreateOrder";
+import {useAppDispatch} from "./store/hooks";
+import {CartFields, hydrateCart} from "./store/models/cart";
 
 
 
@@ -19,7 +22,22 @@ function App() {
     const [variationsProperties, setVariationsProperties] = useState<IProductVariationProperties[]>([])
     const [productVariationPropertyListValues, setProductVariationPropertyListValues] = useState<Record<number, IProductVariationPropertyListValues>>({})
 
+
+    const dispatch = useAppDispatch()
+
     useEffect(() => {
+
+        //HYDRATE STORE
+        console.log('HYDRATE')
+        const cart = localStorage.getItem('cart')
+        if(cart){
+            dispatch(hydrateCart(JSON.parse(cart)))
+        }
+
+
+
+
+        //GET CATEGORIES
         console.log('categoryrequest')
         productService.getProductVariationProperties({
             sort: ["id", 'ASC']
@@ -53,6 +71,8 @@ function App() {
                     />}/>
 
                     <Route path={"/cart"} element={<Cart/>}/>
+
+                    <Route path={"/create-order"} element={<CreateOrder/>}/>
 
                     <Route path={"/shopping-list"} element={<ShoppingList/>}/>
                 </Route>

@@ -18,4 +18,11 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    grid-gap: 40px;
+}
+@media (max-width: 500px) {
+    .content_container{
+        width: 100vw;
+        padding: 10px;
+    }
 }

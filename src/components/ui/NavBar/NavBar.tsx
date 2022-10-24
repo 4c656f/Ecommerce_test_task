@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, memo, useEffect} from 'react';
 import classes from './NavBar.module.css'
 import {ReactComponent as GeoIcon} from '../../../materials/icons/geoTag.svg'
 import {ReactComponent as SearchIcon} from '../../../materials/icons/search.svg'
@@ -59,4 +59,4 @@ const NavBar:FC<NavBarProps> = (props:NavBarProps) => {
     );
 };
 
-export default NavBar;
+export default memo(NavBar);
