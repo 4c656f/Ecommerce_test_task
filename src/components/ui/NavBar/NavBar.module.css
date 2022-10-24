@@ -104,3 +104,12 @@
     border-radius: 999px;
     background-color: #d5dfec;
 }
+
+@media (max-width: 500px) {
+    .search_section{
+        display: none;
+    }
+    .geo_section{
+        display: none;
+    }
+}

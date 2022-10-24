@@ -7,6 +7,11 @@
     align-items: center;
     grid-gap: 100px;
 }
+.container:invalid button{
+    pointer-events: none;
+    border-color: var(--secondary_dark);
+    color: var(--secondary_dark);
+}
 .form_container{
     display: flex;
     flex-shrink: 0;
@@ -52,4 +57,17 @@
 }
 span{
     font-size: 16px;
+}
+
+@media (max-width: 750px){
+    .container{
+        flex-direction: column;
+    }
+    .form_container{
+        width: 100%;
+    }
+    .submit_container{
+        width: 100%;
+        align-items: center;
+    }
 }

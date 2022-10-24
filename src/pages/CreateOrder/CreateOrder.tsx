@@ -1,114 +1,148 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, FormEvent, useEffect, useLayoutEffect, useState} from 'react';
 import {activeOrderSelector} from "../../store/selectors/selectors";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Navigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import Button from "../../components/ui/Button/Button";
 import classes from './CreateOrder.module.css'
-import Input from "../../components/ui/Input/Input";
+import FormInput from "../../components/ui/FormInput/FormInput";
+import {IFormElement} from "../../types/IFormElement";
 
 type CreateOrderProps = {}
+
+
+const formElements = [
+    {
+        uuid: 1,
+        name: 'date',
+        type: 'date',
+        placeholder: 'Выберите дату',
+        errorMessage: 'Это поле обязательно',
+        label: 'Когда доставить?',
+        required: true
+    },
+    {
+        uuid: 2,
+        name: 'address',
+        type: 'text',
+        placeholder: 'Выберите Адресс доставки',
+        errorMessage: 'Это поле обязательно',
+        label: 'Куда доставить?',
+        required: true
+    },
+    {
+        uuid: 3,
+        name: 'name',
+        type: 'text',
+        placeholder: '',
+        errorMessage: 'Это поле обязательно',
+        label: 'Имя',
+        required: true
+    },
+    {
+        uuid: 4,
+        name: 'tel',
+        type: 'tel',
+        placeholder: '',
+        errorMessage: 'Это поле обязательно',
+        label: 'Телефон',
+        required: true
+    },
+] as IFormElement
 
 const CreateOrder: FC<CreateOrderProps> = (props: CreateOrderProps) => {
 
     const {} = props
 
-    const [formCheck, setFormCheck] = useState<boolean>()
 
+    const [formState, setFormState] = useState<Record<string, string>>(formElements.reduce((previousValue, currentValue) => {
+        previousValue[currentValue.name] = ''
+        return previousValue
+    }, {} as Record<string, string>))
 
     const activeOrder = useSelector(state => activeOrderSelector(state))
 
-    const navigator = useNavigate()
-
-    useEffect(() => {
-        if (activeOrder.length < 1) navigator('/')
-        console.log(activeOrder)
-    }, [])
 
 
+    useEffect(()=>{
+        console.log(formState)
+    }, [formState])
 
-
-
-
-
-    return (
-        <>
-            <h1>Доставка</h1>
-            <div
-                className={classes.container}
-            >
-
-                <div
-                    className={classes.form_container}
+    const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        console.log('submitted', e)
+    }
+    if (activeOrder.length > 0) {
+        return (
+            <>
+                <h1>Доставка</h1>
+                <form
+                    className={classes.container}
+                    onSubmit={handleFormSubmit}
                 >
 
                     <div
-                        className={classes.form_container_element_container}
+                        className={classes.form_container}
                     >
-                        <h3>Когда доставить?</h3>
+                        {formElements.map((value, index) => {
+
+                            const {
+                                uuid,
+                                name,
+                            } = value
+
+                            return <FormInput
+                                key={uuid}
+                                value={formState[name]}
+                                onChange={(event => setFormState(prevState => {
+                                    return {
+                                        ...prevState,
+                                        [name]: event.target.value
+                                    }
+                                }))}
+                                {...value}
+                            />
+                        })}
                     </div>
                     <div
-                        className={classes.form_container_element_container}
-                    >
-                        <h3>Куда доставить?</h3>
-                        <Input
-                            placeholder={'Выберите адрес доставки'}
-                        />
-                    </div>
-                    <div
-                        className={classes.form_container_element_container}
-                    >
-                        <h3>Имя</h3>
-                        <Input
-                            placeholder={''}
-                        />
-                    </div>
-                    <div
-                        className={classes.form_container_element_container}
-                    >
-                        <h3>Телефон</h3>
-                        <Input
-                            placeholder={''}
-                        />
-                    </div>
-                </div>
-                <div
-                    className={classes.submit_container}
-                >
-                    <div
-                        className={classes.submit_element_container}
+                        className={classes.submit_container}
                     >
                         <div
-                            className={classes.submit_element_property_container}
+                            className={classes.submit_element_container}
                         >
-                            <span>Стоимость товаров:</span>
-                            <h3>
-                                {activeOrder[0].orderPrice}
-                            </h3>
+                            <div
+                                className={classes.submit_element_property_container}
+                            >
+                                <span>Стоимость товаров:</span>
+                                <h3>
+                                    {activeOrder[0].orderPrice}
+                                </h3>
+                            </div>
+                            <div
+                                className={classes.submit_element_property_container}
+                            >
+                                <span>Стоимость доставки:</span>
+                                <h3>
+                                    200
+                                </h3>
+                            </div>
+                            <div
+                                className={classes.submit_element_property_container}
+                            >
+                                <span>Итого:</span>
+                                <h2>
+                                    {activeOrder[0].orderPrice + 200}
+                                </h2>
+                            </div>
                         </div>
-                        <div
-                            className={classes.submit_element_property_container}
-                        >
-                            <span>Стоимость доставки:</span>
-                            <h3>
-                                200
-                            </h3>
-                        </div>
-                        <div
-                            className={classes.submit_element_property_container}
-                        >
-                            <span>Итого:</span>
-                            <h2>
-                                {activeOrder[0].orderPrice + 200}
-                            </h2>
-                        </div>
+                        <Button
+
+                        >Оформить</Button>
                     </div>
-                    <Button
-                        disabled
-                    >Оформить</Button>
-                </div>
-            </div>
-        </>
-    );
+                </form>
+            </>
+        );
+    }
+    return <Navigate to={'/'}/>
 };
 
 export default CreateOrder;

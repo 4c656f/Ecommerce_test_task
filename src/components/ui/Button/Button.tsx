@@ -24,7 +24,7 @@ const Button:FC<ButtonProps> = (props:ButtonProps) => {
     return (
         <button
 
-            className={`${classes.btn} ${className?className:''}`}
+            className={`${classes.btn} ${className?className:''} ${disabled&&classes.disabled}`}
             {...rest}
         >
             {children}
