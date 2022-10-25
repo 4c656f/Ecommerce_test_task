@@ -69,7 +69,7 @@ const Cart: FC<CartProps> = (props: CartProps) => {
     }
 
     useEffect(() => {
-
+        // if(cart.length < 1)return
         getCart()
 
     }, [cart.length])
