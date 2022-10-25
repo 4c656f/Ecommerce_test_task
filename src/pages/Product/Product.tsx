@@ -72,7 +72,7 @@ const Product: FC<ProductProps> = (props: ProductProps) => {
 
 
         const data = await productService.getProductVariations({filter: {product_id: prodId}})
-        console.log(data, 'productVariations')
+
         setVariationId(data[0].id)
         data.forEach(value => setVariations(prevState => prevState.set(value.id, value)))
 

@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, memo, useEffect, useState} from 'react';
 import classes from "./CustomImage.module.css"
 
 type CustomImageProps = {
@@ -41,4 +41,4 @@ const CustomImage: FC<CustomImageProps> = (props: CustomImageProps) => {
     );
 };
 
-export default CustomImage;
+export default memo(CustomImage);

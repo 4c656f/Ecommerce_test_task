@@ -1,0 +1,32 @@
+.container{
+    width: 100%;
+    position: absolute;
+    background-color: #F8F8F8;
+    bottom: 0%;
+    height: 215px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+.social_section{
+    display: flex;
+    flex-direction: row;
+    grid-gap: 20px;
+}
+.icons_section{
+    display: flex;
+    flex-direction: row;
+    grid-gap: 20px;
+}
+@media (max-width: 500px) {
+    .social_section{
+        flex-direction: column;
+        align-items: center;
+    }
+    .container{
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+}

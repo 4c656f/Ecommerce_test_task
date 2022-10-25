@@ -61,6 +61,7 @@ const ProductCard: FC<ProductCardProps> = (props: ProductCardProps) => {
 
             <button
                 className={classes.category}
+                style={{backgroundColor: `var(--category_${category_id})`}}
             >
                 {categories[category_id]}
             </button>

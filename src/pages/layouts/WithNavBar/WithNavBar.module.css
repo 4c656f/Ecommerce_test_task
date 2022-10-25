@@ -8,6 +8,9 @@
     grid-gap: 20px;
     height: 0px;
     min-height: 100vh;
+    height: max-content;
+    position: relative;
+    padding-bottom: 300px;
 }
 
 .content_container {

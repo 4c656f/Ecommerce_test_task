@@ -1,4 +1,4 @@
-import React, {ComponentProps, FC, PropsWithChildren} from 'react';
+import React, {ComponentProps, FC, memo, PropsWithChildren} from 'react';
 import classes from './Button.module.css'
 
 
@@ -32,4 +32,4 @@ const Button: FC<ButtonProps> = (props: ButtonProps) => {
     );
 };
 
-export default Button;
+export default memo(Button);

@@ -2,10 +2,18 @@ import {attr, Model} from "redux-orm";
 import {createAction} from "@reduxjs/toolkit";
 
 
+export type serializedProduct = {
+    productId: number;
+    variationId: number;
+    quantity: number;
+    price:number;
+}
+
 export type OrderFields = {
     id: string;
     orderPrice: number;
     orderAddress: string;
+    orderProducts: serializedProduct[]
     orderDate: string
     orderUUID: number;
 }
@@ -34,6 +42,7 @@ export class OrdersHistory extends Model {
             id: attr(),
             orderPrice: attr(),
             orderAddress: attr(),
+            orderProducts: attr(),
             orderDate: attr(),
             orderUUID: attr(),
         };
@@ -47,12 +56,14 @@ export class OrdersHistory extends Model {
                     orderPrice,
                     orderAddress,
                     orderDate,
+                    orderProducts,
                     orderUUID,
                 } = payload
 
                 OrdersHistory.create({
                     orderPrice: orderPrice,
                     orderAddress: orderAddress,
+                    orderProducts: orderProducts,
                     orderDate: orderDate,
                     orderUUID: orderUUID
                 })

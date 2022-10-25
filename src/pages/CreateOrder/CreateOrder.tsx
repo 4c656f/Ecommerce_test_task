@@ -67,9 +67,6 @@ const CreateOrder: FC<CreateOrderProps> = (props: CreateOrderProps) => {
     const dispatch = useAppDispatch()
 
 
-    useEffect(() => {
-        console.log(activeOrder)
-    }, [formState])
 
     const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -77,6 +74,7 @@ const CreateOrder: FC<CreateOrderProps> = (props: CreateOrderProps) => {
             orderPrice: activeOrder[0].orderPrice + 200,
             orderAddress: formState['address'],
             orderDate: formState['date'],
+            orderProducts: activeOrder[0].orderProducts,
             orderUUID: 1,
         }))
         dispatch(clearCart())

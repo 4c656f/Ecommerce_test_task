@@ -11,6 +11,7 @@ import {ReactComponent as DeleteIcon} from "../../materials/icons/delete.svg";
 import CustomImage from "../../components/ui/CustomImage/Image";
 import {Link, useNavigate} from "react-router-dom";
 import {addToActiveOrder} from "../../store/models/activeOrder";
+import {serializedProduct} from "../../store/models/ordersHistory";
 
 type CartProps = {}
 
@@ -36,7 +37,7 @@ const Cart: FC<CartProps> = (props: CartProps) => {
     const navigator = useNavigate()
 
     const getCart = async () => {
-
+        if(cartPrice)return
         setIsCartLoading(true)
         const variants = await productService.getProductVariations({
             filter: {
@@ -64,7 +65,7 @@ const Cart: FC<CartProps> = (props: CartProps) => {
                 }, {} as Record<string | number, IProductVariations>)
             }
         })
-        setIsCartLoading(prevState => false)
+        setIsCartLoading(false)
     }
 
     useEffect(() => {
@@ -73,7 +74,7 @@ const Cart: FC<CartProps> = (props: CartProps) => {
 
     }, [cart.length])
 
-    const cartPriceMemo = useMemo(() => {
+    const calcCartPrice = ():number => {
 
         if (isCartLoading) return 0
         if (!cartPrice) return 0
@@ -82,12 +83,35 @@ const Cart: FC<CartProps> = (props: CartProps) => {
             if (!cartPrice.variations[value.variationId]?.price) return 0
             return prev + (cartPrice.variations[value.variationId].price * value.quantity)
         }, 0)
-    }, [...cart.map(value => value.quantity), isCartLoading])
+    }
 
 
     const handleCreateOrder = () => {
         if(cart.length< 1)return
-        dispatch(addToActiveOrder({orderPrice: cartPriceMemo}))
+
+        const calc = cart.reduce((prev, value)=>{
+
+            let price = 0
+            if (cartPrice?.variations[value.variationId]?.price){
+                price = (cartPrice.variations[value.variationId].price)
+            }
+            prev['orderPrice'] = price * value.quantity
+            prev.orderProducts.push({
+                productId: value.productId,
+                variationId: value.variationId,
+                quantity: value.quantity,
+                price: price,
+            })
+
+            return prev
+        }, {orderPrice: 0, orderProducts: []} as {orderPrice: number, orderProducts: serializedProduct[]})
+
+
+        dispatch(addToActiveOrder({
+            orderPrice: calc.orderPrice,
+            orderProducts: calc.orderProducts
+
+        }))
         navigator('/create-order')
     }
 
@@ -116,12 +140,7 @@ const Cart: FC<CartProps> = (props: CartProps) => {
                         {
                             cartPrice &&
                             <h2>
-                                {/*{*/}
-                                {/*    cart.reduce((prev, value) => {*/}
-                                {/*        return prev + (cartPrice.variations[value.variationId].price * value.quantity)*/}
-                                {/*    }, 0)*/}
-                                {/*}*/}
-                                {cartPriceMemo}
+                                {calcCartPrice()}
                             </h2>
                         }
                     </div>

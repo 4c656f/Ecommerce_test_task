@@ -39,11 +39,11 @@ function App() {
 
 
         //GET CATEGORIES
-        console.log('categoryrequest')
+
         productService.getProductVariationProperties({
             sort: ["id", 'ASC']
         }).then((data) => {
-            console.log(data, '-----properties')
+
             setVariationsProperties([...data])
         })
         productService.getProductVariationPropertyListValues({}).then(value => {

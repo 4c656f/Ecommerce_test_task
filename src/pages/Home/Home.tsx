@@ -115,7 +115,7 @@ const Home: FC<HomeProps> = (props: HomeProps) => {
         const observerCallback = (entries: any[]) => {
 
             if (entries[0].isIntersecting && !isLoading) {
-                console.log('observerd', range)
+
                 setRange((prevState) => {
                     return [prevState[1] + 1, prevState[1] + 10]
                 })
@@ -138,7 +138,7 @@ const Home: FC<HomeProps> = (props: HomeProps) => {
                                 key={value[0]}
                                 className={classes.category_btn}
                                 onClick={() => handleCategoryClick(value[0])}
-                                style={{backgroundColor: activeCategoryId == value[0] ? 'red' : 'blue'}}
+                                style={{backgroundColor:`var(--category_${value[0]})`, filter: activeCategoryId == value[0] ? 'brightness(1.5)' : "none"}}
                             >
                                 <h4>{value[1]}</h4>
                             </button>

@@ -71,7 +71,6 @@
     all: unset;
     cursor: pointer;
     font-size: 14px;
-    background-color: var(--accent_blue);
     color: var(--secondary_white);
     padding: 2px 10px 2px 10px;
     border-radius: 999px;
@@ -83,7 +82,7 @@
 }
 
 .price_loader {
-    height: 27px;
+    height: 28px;
     width: 100%;
     border-radius: 999px;
 }

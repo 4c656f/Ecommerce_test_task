@@ -12,7 +12,7 @@ const OrdersHistory: FC<OrdersHistoryProps> = (props: OrdersHistoryProps) => {
 
     const orders: OrderFields[] = useAppSelector(state => ordersHistorySelector(state))
 
-    useEffect(() => console.log(orders))
+
 
     return (
         <div
@@ -71,7 +71,9 @@ const OrdersHistory: FC<OrdersHistoryProps> = (props: OrdersHistoryProps) => {
                                             кол-во товаров
                                         </span>
                                         <h3>
-
+                                            {value.orderProducts.reduce((previousValue, currentValue) => {
+                                                return previousValue + currentValue.quantity
+                                            }, 0)}
                                         </h3>
                                     </div>
                                     <div

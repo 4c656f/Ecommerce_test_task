@@ -1,15 +1,15 @@
 import {attr, Model} from "redux-orm";
 import {createAction} from "@reduxjs/toolkit";
+import {serializedProduct} from "./ordersHistory";
 
 
 export type ActiveOrderFields = {
     id: string;
     orderPrice: number;
+    orderProducts: serializedProduct[]
 }
 
-type IAddToActiveOrder = {
-    orderPrice: number;
-}
+type IAddToActiveOrder = Omit<ActiveOrderFields, 'id'>
 
 
 export const addToActiveOrder = createAction<IAddToActiveOrder>("models/ActiveOrder/create");
@@ -26,7 +26,8 @@ export class ActiveOrder extends Model {
     static get fields() {
         return {
             id: attr(),
-            orderPrice: attr()
+            orderPrice: attr(),
+            orderProducts: attr()
         };
     }
 
@@ -34,12 +35,14 @@ export class ActiveOrder extends Model {
         switch (type) {
             case "models/ActiveOrder/create": {
                 const {
-                    orderPrice
+                    orderPrice,
+                    orderProducts
                 } = payload
 
                 ActiveOrder.upsert({
                     id: 0,
-                    orderPrice: orderPrice
+                    orderPrice: orderPrice,
+                    orderProducts: orderProducts
                 })
 
                 break;

@@ -6,6 +6,7 @@ import {ReactComponent as CartIcon} from '../../../materials/icons/cart.svg'
 import {Link} from "react-router-dom";
 import {useAppSelector} from "../../../store/hooks";
 import {cartSelector} from "../../../store/selectors/selectors";
+import {useSelector} from "react-redux";
 
 type NavBarProps = {}
 
@@ -14,11 +15,9 @@ const NavBar: FC<NavBarProps> = (props: NavBarProps) => {
     const {} = props
 
 
-    const cart = useAppSelector(state => cartSelector(state))
+    const cart = useSelector(state => cartSelector(state))
 
-    useEffect(() => {
-        console.log(cart)
-    }, [cart.length])
+
 
     return (
         <div className={classes.container}>
