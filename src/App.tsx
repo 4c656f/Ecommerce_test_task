@@ -4,7 +4,7 @@ import Home from "./pages/Home/Home";
 import WithNavBar from "./pages/layouts/WithNavBar/WithNavBar";
 import Product from "./pages/Product/Product";
 import Cart from "./pages/Cart/Cart";
-import ShoppingList from "./pages/ShoppingList";
+import OrdersHistory from "./pages/OrdersHistory/OrdersHistory";
 import productService from "./services/productService";
 import {IProductVariationProperties} from "./types/IProductVariationProperties";
 import {IProductVariationPropertyListValues} from "./types/IProductVariationPropertyListValues";
@@ -12,9 +12,8 @@ import './materials/styles/index.css'
 import './materials/styles/variables.css'
 import CreateOrder from "./pages/CreateOrder/CreateOrder";
 import {useAppDispatch} from "./store/hooks";
-import {CartFields, hydrateCart} from "./store/models/cart";
-
-
+import {hydrateCart} from "./store/models/cart";
+import {hydrateOrdersHistory} from "./store/models/ordersHistory";
 
 
 function App() {
@@ -30,11 +29,13 @@ function App() {
         //HYDRATE STORE
         console.log('HYDRATE')
         const cart = localStorage.getItem('cart')
-        if(cart){
+        const ordersHistory = localStorage.getItem('ordersHistory')
+        if (cart) {
             dispatch(hydrateCart(JSON.parse(cart)))
         }
-
-
+        if(ordersHistory){
+            dispatch(hydrateOrdersHistory(JSON.parse(ordersHistory)))
+        }
 
 
         //GET CATEGORIES
@@ -74,7 +75,7 @@ function App() {
 
                     <Route path={"/create-order"} element={<CreateOrder/>}/>
 
-                    <Route path={"/shopping-list"} element={<ShoppingList/>}/>
+                    <Route path={"/order-history"} element={<OrdersHistory/>}/>
                 </Route>
 
             </Routes>

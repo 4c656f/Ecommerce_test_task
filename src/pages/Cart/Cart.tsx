@@ -31,7 +31,7 @@ const Cart: FC<CartProps> = (props: CartProps) => {
 
     const [cartPrice, setCartPrice] = useState<ICart>()
 
-    const[isCartLoading, setIsCartLoading] = useState<boolean>()
+    const [isCartLoading, setIsCartLoading] = useState<boolean>()
 
     const navigator = useNavigate()
 
@@ -52,16 +52,18 @@ const Cart: FC<CartProps> = (props: CartProps) => {
         })
 
 
-        setCartPrice((prevState) => {return {
-            products: products.reduce((previousValue, currentValue) => {
-                previousValue[currentValue.id] = currentValue
-                return previousValue
-            }, {} as Record<string | number, IProduct>),
-            variations: variants.reduce((previousValue, currentValue) => {
-                previousValue[currentValue.id] = currentValue
-                return previousValue
-            }, {} as Record<string | number, IProductVariations>)
-        }})
+        setCartPrice((prevState) => {
+            return {
+                products: products.reduce((previousValue, currentValue) => {
+                    previousValue[currentValue.id] = currentValue
+                    return previousValue
+                }, {} as Record<string | number, IProduct>),
+                variations: variants.reduce((previousValue, currentValue) => {
+                    previousValue[currentValue.id] = currentValue
+                    return previousValue
+                }, {} as Record<string | number, IProductVariations>)
+            }
+        })
         setIsCartLoading(prevState => false)
     }
 
@@ -71,26 +73,23 @@ const Cart: FC<CartProps> = (props: CartProps) => {
 
     }, [cart.length])
 
-    const cartPriceMemo = useMemo(()=>{
+    const cartPriceMemo = useMemo(() => {
 
-        if(isCartLoading) return 0
-        if(!cartPrice)return 0
+        if (isCartLoading) return 0
+        if (!cartPrice) return 0
 
         return cart.reduce((prev, value) => {
-            if(!cartPrice.variations[value.variationId]?.price)return 0
+            if (!cartPrice.variations[value.variationId]?.price) return 0
             return prev + (cartPrice.variations[value.variationId].price * value.quantity)
         }, 0)
-    },[...cart.map(value => value.quantity), isCartLoading])
+    }, [...cart.map(value => value.quantity), isCartLoading])
 
 
     const handleCreateOrder = () => {
+        if(cart.length< 1)return
         dispatch(addToActiveOrder({orderPrice: cartPriceMemo}))
         navigator('/create-order')
     }
-
-
-
-
 
 
     return (
@@ -137,8 +136,8 @@ const Cart: FC<CartProps> = (props: CartProps) => {
                         return (
                             <div
                                 className={classes.cart_element}
-                                key={value['id']+value["variationId"]}
-                            >   
+                                key={value['id'] + value["variationId"]}
+                            >
                                 <Link
                                     to={`/product/${value["productId"]}`}
                                     className={classes.img}
@@ -183,7 +182,7 @@ const Cart: FC<CartProps> = (props: CartProps) => {
                                         className={classes.change_button}
                                     >
                                         {
-                                            value.quantity<2?<DeleteIcon/>:'-'
+                                            value.quantity < 2 ? <DeleteIcon/> : '-'
                                         }
                                     </button>
                                 </div>
@@ -191,7 +190,10 @@ const Cart: FC<CartProps> = (props: CartProps) => {
                                     {cartPrice.variations[value.variationId]?.price}
                                 </h2>
                                 <button
-                                    onClick={()=>dispatch(deleteFromCart({variationId: value["variationId"],productId: value["productId"]}))}
+                                    onClick={() => dispatch(deleteFromCart({
+                                        variationId: value["variationId"],
+                                        productId: value["productId"]
+                                    }))}
                                     className={classes.change_button}
                                 >
                                     <DeleteIcon

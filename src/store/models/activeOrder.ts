@@ -15,7 +15,6 @@ type IAddToActiveOrder = {
 export const addToActiveOrder = createAction<IAddToActiveOrder>("models/ActiveOrder/create");
 
 
-
 interface addToActiveOrder {
     type: "models/ActiveOrder/create"
     payload: IAddToActiveOrder
@@ -39,7 +38,7 @@ export class ActiveOrder extends Model {
                 } = payload
 
                 ActiveOrder.upsert({
-                    id:0,
+                    id: 0,
                     orderPrice: orderPrice
                 })
 

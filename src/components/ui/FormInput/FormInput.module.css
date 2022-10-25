@@ -1,4 +1,4 @@
-.container{
+.container {
     display: flex;
     flex-direction: column;
     grid-gap: 20px;
@@ -6,7 +6,8 @@
     position: relative;
 
 }
-.input{
+
+.input {
 
     all: unset;
     box-sizing: border-box;
@@ -21,10 +22,12 @@
     transition: var(--transition);
     color: var(--primary_dark);
 }
-.input:focus{
+
+.input:focus {
     border-color: var(--accent_blue);
 }
-.input::placeholder{
+
+.input::placeholder {
     color: var(--secondary_dark);
     font-family: Raleway;
     font-size: 16px;
@@ -32,18 +35,20 @@
     transition: var(--transition);
 }
 
-.input:focus::placeholder{
+.input:focus::placeholder {
     opacity: 0;
 }
 
 
-.input:invalid[data-left = 'true'] ~ .error_message{
+.input:invalid[data-left = 'true'] ~ .error_message {
     display: block;
 }
-.input:invalid[data-left = 'true']{
+
+.input:invalid[data-left = 'true'] {
     border-color: red;
 }
-.error_message{
+
+.error_message {
     color: red;
     display: none;
     position: absolute;

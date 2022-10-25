@@ -1,61 +1,70 @@
-*{
+* {
     padding: 0;
     box-sizing: border-box;
     margin: 0;
 }
-h1 h2 h3 h4 h5 h6 span{
+
+h1 h2 h3 h4 h5 h6 span {
     white-space: nowrap;
 }
-img{
+
+img {
     object-fit: cover;
 }
-h1{
+
+h1 {
 
     all: unset;
     font-family: 'Raleway';
     font-weight: 700;
     font-size: 37px;
 }
-h2{
+
+h2 {
     all: unset;
     font-family: 'Raleway';
     font-weight: 700;
     font-size: 23px;
 }
-h3{
+
+h3 {
     all: unset;
     font-family: 'Raleway';
     font-weight: 400;
     font-size: 18px;
 }
-h4{
+
+h4 {
     all: unset;
     font-family: 'Raleway';
     font-weight: 400;
     font-size: 14px;
 }
-span{
+
+span {
     all: unset;
     font-family: 'Raleway';
     font-weight: 400;
     font-size: 14px;
 }
-@keyframes backgroundShimmer{
-    0%{
+
+@keyframes backgroundShimmer {
+    0% {
         background-color: var(--secondary_white);
     }
-    50%{
+    50% {
         background-color: var(--secondary_blue);
     }
-    100%{
+    100% {
         background-color: var(--secondary_white);
     }
 }
-.loader_bg{
+
+.loader_bg {
     background: var(--secondary_blue);
     animation-name: backgroundShimmer;
     animation-duration: 1.5s;
     animation-fill-mode: forwards;
-    animation-timing-function:ease-in;
+    animation-timing-function: ease-in;
     animation-iteration-count: infinite;
 }

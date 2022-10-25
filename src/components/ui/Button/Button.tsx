@@ -1,4 +1,4 @@
-import React, {ComponentProps, FC, PropsWithChildren, ReactElement} from 'react';
+import React, {ComponentProps, FC, PropsWithChildren} from 'react';
 import classes from './Button.module.css'
 
 
@@ -11,7 +11,7 @@ type CustomButtonProps = {
 type ButtonProps = PropsWithChildren<CustomButtonProps> & Omit<DefaultButtonProps, keyof CustomButtonProps>
 
 
-const Button:FC<ButtonProps> = (props:ButtonProps) => {
+const Button: FC<ButtonProps> = (props: ButtonProps) => {
 
     const {
         disabled,
@@ -24,7 +24,7 @@ const Button:FC<ButtonProps> = (props:ButtonProps) => {
     return (
         <button
 
-            className={`${classes.btn} ${className?className:''} ${disabled&&classes.disabled}`}
+            className={`${classes.btn} ${className ? className : ''} ${disabled && classes.disabled}`}
             {...rest}
         >
             {children}

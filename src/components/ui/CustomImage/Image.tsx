@@ -1,7 +1,8 @@
 import React, {FC, useEffect, useState} from 'react';
 import classes from "./CustomImage.module.css"
+
 type CustomImageProps = {
-    className?:string;
+    className?: string;
     src?: string;
 }
 
@@ -17,8 +18,8 @@ const CustomImage: FC<CustomImageProps> = (props: CustomImageProps) => {
     useEffect(() => {
         if (!src) return
         const img = new Image()
-        img.src= `https://test2.sionic.ru${src}`
-        img.onload = ()=>setUrl(`https://test2.sionic.ru${src}`)
+        img.src = `https://test2.sionic.ru${src}`
+        img.onload = () => setUrl(`https://test2.sionic.ru${src}`)
 
     }, [src])
 
@@ -26,13 +27,13 @@ const CustomImage: FC<CustomImageProps> = (props: CustomImageProps) => {
     return (
         <>
             {
-                url?
+                url ?
                     <img
                         src={url}
-                        className={`${className?className:""} ${classes.img}`}
-                    />:
+                        className={`${className ? className : ""} ${classes.img}`}
+                    /> :
                     <div
-                        className={`loader_bg ${className?className:""} ${classes.img}`}
+                        className={`loader_bg ${className ? className : ""} ${classes.img}`}
                     />
 
             }

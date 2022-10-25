@@ -58,7 +58,7 @@ const Home: FC<HomeProps> = (props: HomeProps) => {
             }
 
             setProducts(prevState => {
-                if(range[0]===0){
+                if (range[0] === 0) {
                     return [...data]
                 }
                 return [...prevState, ...data]
@@ -160,7 +160,7 @@ const Home: FC<HomeProps> = (props: HomeProps) => {
                     })
 
                 }
-                {isLast&&<h3>На этом всё</h3>}
+                {isLast && <h3>На этом всё</h3>}
                 <div ref={lastElem} className={classes.observer}></div>
             </div>
 

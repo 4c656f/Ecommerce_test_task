@@ -1,4 +1,4 @@
-.btn{
+.btn {
     all: unset;
     width: 100%;
     cursor: pointer;
@@ -13,10 +13,12 @@
     color: var(--accent_blue);
     transition: var(--transition);
 }
-.disabled{
+
+.disabled {
     pointer-events: none;
     color: var(--secondary_dark);
 }
-.btn:hover{
+
+.btn:hover {
     background-color: var(--secondary_blue);
 }

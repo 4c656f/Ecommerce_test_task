@@ -1,4 +1,4 @@
-.container{
+.container {
     width: 100%;
     max-width: 900px;
     display: flex;
@@ -7,12 +7,14 @@
     align-items: center;
     grid-gap: 100px;
 }
-.container:invalid button{
+
+.container:invalid button {
     pointer-events: none;
     border-color: var(--secondary_dark);
     color: var(--secondary_dark);
 }
-.form_container{
+
+.form_container {
     display: flex;
     flex-shrink: 0;
     flex-direction: column;
@@ -21,13 +23,15 @@
     grid-gap: 20px;
     width: 290px;
 }
-.form_container_element_container{
+
+.form_container_element_container {
     width: 100%;
     display: flex;
     flex-direction: column;
     grid-gap: 18px;
 }
-.submit_container{
+
+.submit_container {
     display: flex;
     flex-direction: column;
     grid-gap: 10px;
@@ -36,7 +40,8 @@
     justify-content: flex-start;
 
 }
-.submit_element_container{
+
+.submit_element_container {
     display: flex;
     flex-direction: column;
     border-radius: 20px;
@@ -45,28 +50,33 @@
     width: 290px;
     grid-gap: 5px;
 }
-.submit_element_container div:last-child{
+
+.submit_element_container div:last-child {
     margin-top: 10px;
 }
-.submit_element_property_container{
+
+.submit_element_property_container {
     display: flex;
     grid-gap: 20px;
     width: 100%;
     justify-content: space-between;
 
 }
-span{
+
+span {
     font-size: 16px;
 }
 
-@media (max-width: 750px){
-    .container{
+@media (max-width: 750px) {
+    .container {
         flex-direction: column;
     }
-    .form_container{
+
+    .form_container {
         width: 100%;
     }
-    .submit_container{
+
+    .submit_container {
         width: 100%;
         align-items: center;
     }

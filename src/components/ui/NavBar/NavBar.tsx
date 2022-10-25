@@ -6,20 +6,17 @@ import {ReactComponent as CartIcon} from '../../../materials/icons/cart.svg'
 import {Link} from "react-router-dom";
 import {useAppSelector} from "../../../store/hooks";
 import {cartSelector} from "../../../store/selectors/selectors";
-type NavBarProps = {
 
-}
+type NavBarProps = {}
 
-const NavBar:FC<NavBarProps> = (props:NavBarProps) => {
+const NavBar: FC<NavBarProps> = (props: NavBarProps) => {
 
-    const {
-        
-    } = props
+    const {} = props
 
 
     const cart = useAppSelector(state => cartSelector(state))
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(cart)
     }, [cart.length])
 
@@ -48,11 +45,11 @@ const NavBar:FC<NavBarProps> = (props:NavBarProps) => {
                 />
                 <h3 className={classes.cart_counter}>
                     {
-                        cart.length>0&&cart.length
+                        cart.length > 0 && cart.length
                     }
                 </h3>
             </Link>
-            <Link className={classes.avatar} to={'/shopping-list'}>
+            <Link className={classes.avatar} to={'/order-history'}>
 
             </Link>
         </div>

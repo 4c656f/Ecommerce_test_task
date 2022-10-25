@@ -1,7 +1,6 @@
 import {ComponentProps} from "react";
 
 
-
 type CustomFromInputProps = {
     uuid: number
     name: string

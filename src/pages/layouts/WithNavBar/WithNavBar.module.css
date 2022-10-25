@@ -1,4 +1,4 @@
-.container{
+.container {
     background-color: var(--background);
     display: flex;
     justify-content: flex-start;
@@ -9,7 +9,8 @@
     height: 0px;
     min-height: 100vh;
 }
-.content_container{
+
+.content_container {
     padding-right: 50px;
     padding-left: 50px;
     height: 100%;
@@ -20,8 +21,9 @@
     align-items: center;
     grid-gap: 40px;
 }
+
 @media (max-width: 500px) {
-    .content_container{
+    .content_container {
         width: 100vw;
         padding: 10px;
     }

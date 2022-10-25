@@ -16,20 +16,22 @@ type IAddToCart = {
     productImg: string;
 }
 type IChangeQuantity = {
-    productId: number|string;
-    variationId:number|string
+    productId: number | string;
+    variationId: number | string
     amount: number
 }
 
 export const addToCart = createAction<IAddToCart>("models/cart/create");
 export const changeQuantity = createAction<IChangeQuantity>("models/cart/change");
 export const deleteFromCart = createAction<Omit<IChangeQuantity, 'amount'>>("models/cart/delete");
+export const clearCart = createAction("models/cart/clear");
 export const hydrateCart = createAction<CartFields[]>("models/cart/hydrate");
 
 interface addToCart {
     type: "models/cart/create"
     payload: IAddToCart
 }
+
 interface changeQuantity {
     type: "models/cart/change"
     payload: IChangeQuantity
@@ -39,12 +41,17 @@ interface removeFromCart {
     type: "models/cart/delete"
     payload: Omit<IChangeQuantity, 'amount'>
 }
+
 interface hydrateCart {
     type: "models/cart/hydrate"
     payload: CartFields[]
 }
+interface clearCart {
+    type: "models/cart/clear"
+    payload?: never
+}
 
-type IActions = addToCart | removeFromCart | changeQuantity | hydrateCart
+type IActions = addToCart | removeFromCart | changeQuantity | hydrateCart | clearCart
 
 export class Cart extends Model {
     static get fields() {
@@ -87,13 +94,13 @@ export class Cart extends Model {
                 break;
             }
             case 'models/cart/change': {
-                const{
+                const {
                     productId,
                     variationId,
                     amount
                 } = payload
                 let cartElem = Cart.withId(`${productId}${variationId}`)
-                if(cartElem.quantity < 2 && amount < 0){
+                if (cartElem.quantity < 2 && amount < 0) {
                     cartElem?.delete()
                     break
                 }
@@ -106,11 +113,19 @@ export class Cart extends Model {
                 }
                 break;
             }
-            case 'models/cart/hydrate':{
+            case 'models/cart/hydrate': {
                 const arr = payload
 
-                arr.forEach(value=>{
+                arr.forEach(value => {
                     Cart.create(value)
+                })
+                break;
+
+
+            }
+            case 'models/cart/clear': {
+                Cart.all().toModelArray().forEach((value:any)=>{
+                    value.delete()
                 })
                 break;
 

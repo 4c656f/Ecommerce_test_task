@@ -1,4 +1,4 @@
-import React, {ComponentProps, FC, PropsWithChildren, useState} from 'react';
+import React, {ComponentProps, FC, useState} from 'react';
 import classes from './FormInput.module.css'
 
 
@@ -11,9 +11,7 @@ type DefaultFromInputProps = ComponentProps<'input'>
 type FromInputProps = CustomFromInputProps & Omit<DefaultFromInputProps, keyof CustomFromInputProps>
 
 
-
-
-const FormInput:FC<FromInputProps> = (props:FromInputProps) => {
+const FormInput: FC<FromInputProps> = (props: FromInputProps) => {
 
     const {
         label,
@@ -22,7 +20,7 @@ const FormInput:FC<FromInputProps> = (props:FromInputProps) => {
         ...rest
     } = props
 
-    const [left , setLeft] = useState(false)
+    const [left, setLeft] = useState(false)
 
 
     return (
@@ -33,9 +31,9 @@ const FormInput:FC<FromInputProps> = (props:FromInputProps) => {
                 {label}
             </h3>
             <input
-                className={`${className?className:''} ${classes.input}`}
-                onBlur={()=>setLeft(true)}
-                data-left={left?'true':'false'}
+                className={`${className ? className : ''} ${classes.input}`}
+                onBlur={() => setLeft(true)}
+                data-left={left ? 'true' : 'false'}
                 {
                     ...rest
                 }

@@ -5,8 +5,7 @@ import {IProductVariations} from "../../types/IProductVariations";
 import {IProductVariationProperties} from "../../types/IProductVariationProperties";
 import {IProductVariationPropertyValues} from "../../types/IProductVariationPropertyValues";
 import {IProductVariationPropertyListValues} from "../../types/IProductVariationPropertyListValues";
-import {useAppDispatch, useAppSelector} from "../../store/hooks";
-import {cartSelector} from "../../store/selectors/selectors";
+import {useAppDispatch} from "../../store/hooks";
 import classes from './Product.module.css'
 import Button from "../../components/ui/Button/Button";
 import {DropDown, MenuItem} from "4c656f_react_ui_kit";
@@ -72,7 +71,6 @@ const Product: FC<ProductProps> = (props: ProductProps) => {
         setImageUrl(product[0].image_url)
 
 
-
         const data = await productService.getProductVariations({filter: {product_id: prodId}})
         console.log(data, 'productVariations')
         setVariationId(data[0].id)
@@ -111,20 +109,20 @@ const Product: FC<ProductProps> = (props: ProductProps) => {
     const dispatch = useAppDispatch()
 
 
-    const handleDropDown = (item:number) => {
+    const handleDropDown = (item: number) => {
         setDropDownIndex(item)
     }
-    useEffect(()=>{
+    useEffect(() => {
 
-        const variationId = variations.get(Array.from(variations.keys())[dropDownIndex?dropDownIndex:0])?.id
+        const variationId = variations.get(Array.from(variations.keys())[dropDownIndex ? dropDownIndex : 0])?.id
         //@ts-ignore
         setVariationId(variationId)
-    },[dropDownIndex])
+    }, [dropDownIndex])
 
 
     const handleAddToCart = () => {
-        if(!variations?.get(variationId)?.stock)return
-        if(!productId || !imageUrl)return;
+        if (!variations?.get(variationId)?.stock) return
+        if (!productId || !imageUrl) return;
         dispatch(addToCart({
             productId: Number(productId),
             productImg: imageUrl,
@@ -173,7 +171,7 @@ const Product: FC<ProductProps> = (props: ProductProps) => {
                 </div>
                 <DropDown
                     colorIndex={'1'}
-                    label={variations.get(variationId)?.id.toString()??'Выбать'}
+                    label={variations.get(variationId)?.id.toString() ?? 'Выбать'}
                     onChange={handleDropDown}
                     search={true}
 
