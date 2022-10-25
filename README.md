@@ -1,4 +1,4 @@
-##Sionic e-commerce test task
+## E-commerce test task
 
 
 ## Available Scripts
