@@ -54,6 +54,8 @@ const Product: FC<ProductProps> = (props: ProductProps) => {
 
     const [variationId, setVariationId] = useState<number>(0)
 
+
+    //Todo: change activeDropdownIndex to activeDropdownValue for simplifications
     const [dropDownIndex, setDropDownIndex] = useState<number>()
 
     const [imageUrl, setImageUrl] = useState<string>()
@@ -224,11 +226,10 @@ const Product: FC<ProductProps> = (props: ProductProps) => {
                                                 {
                                                     data.name
                                                 }
-
                                             </span>
                                             <span>
                                                 {
-                                                    dataString ? dataString : "null"
+                                                    dataString
                                                 }
                                             </span>
 

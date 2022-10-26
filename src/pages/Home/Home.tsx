@@ -12,6 +12,11 @@ const Home: FC<HomeProps> = (props: HomeProps) => {
 
     const {} = props
 
+
+
+    //Todo: handle all this state by custom hook/reducer
+    //Todo: implement react query/rtk query for api
+
     const lastElem = useRef<any>();
     const observer = useRef<any>();
 

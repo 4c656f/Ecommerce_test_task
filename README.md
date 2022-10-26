@@ -1,4 +1,4 @@
-## E-commerce test task
+## This is an e commerce test task with a time for execution of 20-30 hours
 
 
 ## Available Scripts
