@@ -37,6 +37,7 @@ const Home: FC<HomeProps> = (props: HomeProps) => {
         if (Object.keys(categories).length < 1) {
 
             productService.getProductCategories({}).then((data) => {
+                console.log(data)
                 const obj = data.reduce<Record<number, string>>((acum, data) => {
 
                     acum[data["id"]] = data["name"]
